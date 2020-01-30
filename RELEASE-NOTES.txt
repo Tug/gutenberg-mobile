@@ -1,6 +1,7 @@
 1.22.0
 ------
 * Make inserter to show options on long-press to add before/after
+* [Android] When phone is in landscape orientation and soft keyboard is displayed, allow scrolling through post.
 
 1.21.0
 ------
