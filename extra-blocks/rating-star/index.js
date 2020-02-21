@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import { Text } from 'react-native';
-
-/**
  * WordPress dependencies
  */
 import { __, _x } from '@wordpress/i18n';
@@ -12,6 +7,8 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { StarBlockIcon } from './icon';
+import edit from './edit';
+import save from './save';
 
 export const name = 'rating-star';
 
@@ -30,6 +27,6 @@ export const settings = {
 	category: 'extra',
 	example: {},
 	attributes: {},
-	edit: () => <Text>{ '⭐⭐⭐⭐⭐' }</Text>,
-	save: () => '⭐⭐⭐⭐⭐',
+	edit,
+	save,
 };
