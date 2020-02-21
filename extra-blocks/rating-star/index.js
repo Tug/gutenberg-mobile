@@ -26,7 +26,12 @@ export const settings = {
 	],
 	category: 'extra',
 	example: {},
-	attributes: {},
+	attributes: {
+		rating: {
+			type: 'number',
+			default: 3,
+		},
+	},
 	edit,
 	save,
 };
