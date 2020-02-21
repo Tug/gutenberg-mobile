@@ -1,6 +1,21 @@
 /**
  * External dependencies
  */
-import { Text } from 'react-native';
+import { View } from 'react-native';
 
-export default () => <Text>{ '⭐⭐⭐⭐⭐' }</Text>;
+/**
+ * Internal dependencies
+ */
+import { StarIcon } from './icon';
+
+export default () => {
+	return (
+		<View style={ { flex: 1, flexDirection: 'row' } }>
+			<StarIcon filled={ true } />
+			<StarIcon filled={ true } />
+			<StarIcon filled={ true } />
+			<StarIcon />
+			<StarIcon />
+		</View>
+	);
+};
