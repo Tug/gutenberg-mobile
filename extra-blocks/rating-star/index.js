@@ -31,6 +31,10 @@ export const settings = {
 			type: 'number',
 			default: 3,
 		},
+		maxRating: {
+			type: 'number',
+			default: 5,
+		}
 	},
 	edit,
 	save,
