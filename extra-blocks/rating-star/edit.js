@@ -14,16 +14,22 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
+import { useState, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { StarIcon } from './icon';
 
-const TouchableStarIcon = ( { filled, onPress } ) => {
+const TouchableStarIcon = ( { disabled, filled, onPress, selected } ) => {
+	const selectedStyles = {
+		borderWidth: 1,
+		borderColor: 'black',
+		borderRadius: 3,
+	};
 	return (
-		<TouchableWithoutFeedback onPress={ onPress }>
-			<View>
+		<TouchableWithoutFeedback disabled={ disabled } onPress={ onPress }>
+			<View style={ selected ? selectedStyles : null }>
 				<StarIcon filled={ filled } />
 			</View>
 		</TouchableWithoutFeedback>
@@ -36,17 +42,37 @@ const alignToFlex = {
 	right: 'flex-end',
 };
 
-export default ( { attributes: { align, maxRating, rating }, setAttributes } ) => {
+export default ( { attributes: { align, maxRating, rating }, isSelected, setAttributes } ) => {
+	const [ lastSelectedStar, updateLastSelected ] = useState( 0 );
+
+	useEffect( () => {
+		if ( ! isSelected ) {
+			updateLastSelected( 0 );
+		}
+	}, [ isSelected ] );
+
 	return (
 		<View style={ { flex: 1, flexDirection: 'row', justifyContent: alignToFlex[ align ] } }>
 			{
-				range( 1, maxRating + 1 ).map( ( starNumber ) => (
-					<TouchableStarIcon
-						key={ starNumber }
-						filled={ starNumber <= rating }
-						onPress={ () => setAttributes( { rating: starNumber } ) }
-					/>
-				) )
+				range( 1, maxRating + 1 ).map( ( starNumber ) => {
+					let filled = starNumber <= rating;
+					if ( rating + 1 - starNumber >= 0.5 && rating - starNumber < 0 ) {
+						filled = 0.5;
+					}
+					return (
+						<TouchableStarIcon
+							key={ starNumber }
+							disabled={ ! isSelected }
+							filled={ filled }
+							selected={ starNumber === lastSelectedStar }
+							onPress={ () => {
+								const minusHalf = starNumber === rating ? -0.5 : 0;
+								setAttributes( { rating: starNumber + minusHalf } );
+								updateLastSelected( starNumber );
+							} }
+						/>
+					);
+				} )
 			}
 			<BlockControls>
 				<AlignmentToolbar

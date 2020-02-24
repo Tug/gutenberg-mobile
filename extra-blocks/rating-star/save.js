@@ -1,2 +1,4 @@
 
-export default ( { attributes: { rating } } ) => '⭐'.repeat( rating );
+export default ( { attributes: { rating } } ) => {
+	return '⭐'.repeat( Math.floor( rating ) ) + ( ( rating % 1 > 0 ) ? '✨' : '' );
+};
