@@ -34,7 +34,11 @@ export const settings = {
 		maxRating: {
 			type: 'number',
 			default: 5,
-		}
+		},
+		align: {
+			type: 'string',
+			default: 'left',
+		},
 	},
 	edit,
 	save,

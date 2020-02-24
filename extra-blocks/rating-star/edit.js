@@ -8,7 +8,11 @@ import { TouchableWithoutFeedback, View } from 'react-native';
  * WordPress dependencies
  */
 import { RangeControl, PanelBody } from '@wordpress/components';
-import { InspectorControls } from '@wordpress/block-editor';
+import {
+	AlignmentToolbar,
+	BlockControls,
+	InspectorControls,
+} from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -26,9 +30,15 @@ const TouchableStarIcon = ( { filled, onPress } ) => {
 	);
 };
 
-export default ( { attributes: { maxRating, rating }, setAttributes } ) => {
+const alignToFlex = {
+	left: 'flex-start',
+	center: 'center',
+	right: 'flex-end',
+};
+
+export default ( { attributes: { align, maxRating, rating }, setAttributes } ) => {
 	return (
-		<View style={ { flex: 1, flexDirection: 'row' } }>
+		<View style={ { flex: 1, flexDirection: 'row', justifyContent: alignToFlex[ align ] } }>
 			{
 				range( 1, maxRating + 1 ).map( ( starNumber ) => (
 					<TouchableStarIcon
@@ -38,6 +48,15 @@ export default ( { attributes: { maxRating, rating }, setAttributes } ) => {
 					/>
 				) )
 			}
+			<BlockControls>
+				<AlignmentToolbar
+					isCollapsed={ false }
+					value={ align }
+					onChange={ ( newAlign ) => {
+						setAttributes( { align: newAlign } );
+					} }
+				/>
+			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={ __( 'Star Rating settings' ) }>
 					<RangeControl
